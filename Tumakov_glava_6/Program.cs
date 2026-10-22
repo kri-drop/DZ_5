@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualBasic;
+﻿//Тумаков - Лабораторная 6 главы
+using Microsoft.VisualBasic;
 
-class Program
+//Упражнение 6.1
+class Program1
 {
     static (int CountVowels, int CountConsonants) CalculateLetters(string filePath)
     {
@@ -44,5 +46,88 @@ class Program
     {
         Task1();
         Console.ReadKey();
+    }
+}
+
+//Упражнение 6.2
+class Program2
+{
+    static void Main()
+    {
+        int[,] matrixA = {
+            { 1, 2 },
+            { 3, 4 }
+        };
+
+        int[,] matrixB = {
+            { 5, 6 },
+            { 7, 8 }
+        };
+
+        Console.WriteLine("Матрица A:");
+        PrintMatrix(matrixA);
+
+        Console.WriteLine("\nМатрица B:");
+        PrintMatrix(matrixB);
+
+        int[,] resultMatrix = MultiplyMatrices(matrixA, matrixB);
+
+        Console.WriteLine("\nРезультат произведения Матрицы А на Матрицу В: ");
+        PrintMatrix(resultMatrix);
+    }
+
+    
+    static void PrintMatrix(int[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write($"{matrix[i, j],4} ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    static int[,] MultiplyMatrices(int[,] a, int[,] b)
+    {
+        int rowsA = a.GetLength(0);
+        int colsA = a.GetLength(1);
+        int rowsB = b.GetLength(0);
+        int colsB = b.GetLength(1);
+        if (colsA != rowsB)
+        {
+            throw new ArgumentException("Число столбцов первой матрицы должно быть равно числу строк второй.");
+        }
+
+        int[,] result = new int[rowsA, colsB];
+
+        for (int i = 0; i < rowsA; i++)
+        {
+            for (int j = 0; j < colsB; j++)
+            {
+                int sum = 0;
+                string steps = "";
+
+                for (int k = 0; k < colsA; k++)
+                {
+                    sum += a[i, k] * b[k, j];
+ 
+                    steps += $"{a[i, k]}×{b[k, j]}";
+                    if (k < colsA - 1)
+                    {
+                        steps += " + ";
+                    }
+                }
+
+                result[i, j] = sum;
+
+            }
+        } 
+
+        return result;
     }
 }
